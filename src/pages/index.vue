@@ -3,14 +3,13 @@ import { isDev, toggleDev } from "~/composables";
 import { GamePlay } from "~/composables/logic";
 
 const play = new GamePlay(12, 12);
-
-const state = play.state;
+useStorage("sweeper-state", play.state);
+const state = computed(() => play.board);
 </script>
 
 <template>
   <div>
     Minesweeper
-    <button @click="toggleDev()">{{ isDev }}</button>
     <div p5>
       <div
         v-for="(row, y) in state"
@@ -30,7 +29,7 @@ const state = play.state;
     </div>
     <div flex="~ gap-1" justify-center>
       <button btn @click="toggleDev()">
-        {{ isDev ? 'NORMAL': '小透不算透'}}
+        {{ isDev ? "NORMAL" : "小透不算透" }}
       </button>
       <button btn @click="play.reset()">
         RESET
